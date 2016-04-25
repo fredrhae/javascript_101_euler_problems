@@ -6,9 +6,8 @@
 var checkNumberIsMultiple = function(number, multiple) {
     if(number % multiple === 0) {
         return true;
-    } else {
-        return false;
     }
+	return false;
 };
 
 var numberIsMultipleFromArrayElement = function (number) { 
@@ -33,7 +32,7 @@ var convertInputToArrayOfNumbers = function(input) {
 		+"typed it correctly. You should use numbers separated by comma: 3,5,7");
 	}
 	return array;
-}
+};
 
 // Initial values
 var maximumNumber = 1000;
@@ -60,6 +59,62 @@ var getSumFromMultiples = function() {
 						Solution for Problem 2
 -----------------------------------------------------------------*/
 
+var getNextFibonacciElementFromArray = function () {
+    var latestElement = fibonacciArray[fibonacciArray.length - 1];
+    if(fibonacciArray.length > 1) {
+        var penultimateElement = fibonacciArray[fibonacciArray.length - 2];
+        return penultimateElement + latestElement;
+    } else {
+        return latestElement;
+    }
+};
+
+var numberIsEven = function(number) {
+	if(number % 2 === 0)
+	{
+		return true;
+	}
+	return false;
+};
+
+var generateFibonacciArray = function (maximum) {
+	fibonacciArray = [1,2];	
+    var currentFibonacci = fibonacciArray[fibonacciArray.length - 1];
+    while(currentFibonacci < maximum)
+    {
+        currentFibonacci = getNextFibonacciElementFromArray();
+            
+        if(currentFibonacci < maximum)
+        {
+            fibonacciArray.push(currentFibonacci);   
+        }
+    }
+};
+
+// Initial values
+var maximumFibonacci = 1000000;
+var fibonacciArray = [1,2];
+
+var getSumFromEvenFibonacciNumbers = function () {
+    maximumFibonacci = document.getElementById("problem2_maximum_fibonacci").value;
+
+    generateFibonacciArray(maximumFibonacci);
+	
+    var sumAllEvenNumbers = 0;
+    for(var key in fibonacciArray)
+    {
+        if(numberIsEven(fibonacciArray[key]))
+        {
+          sumAllEvenNumbers += fibonacciArray[key];
+        }
+    }
+	
+	// Update result in HTML
+	document.getElementById("problem2_answer").innerHTML = sumAllEvenNumbers;
+
+    return sumAllEvenNumbers;
+};
+
 /*---------------------------------------------------------------
 						Event handlers
 -----------------------------------------------------------------*/
@@ -67,4 +122,6 @@ var getSumFromMultiples = function() {
 window.onload = function () {
 	var problem1_answer = document.getElementById("problem1_answer");
 	problem1_answer.innerHTML = getSumFromMultiples();
+	var problem2_answer = document.getElementById("problem2_answer");
+	problem2_answer.innerHTML = getSumFromEvenFibonacciNumbers();
 }
