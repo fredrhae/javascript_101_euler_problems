@@ -116,6 +116,75 @@ var getSumFromEvenFibonacciNumbers = function () {
 };
 
 /*---------------------------------------------------------------
+					Solution for Problem 3
+-----------------------------------------------------------------*/
+
+
+var numberIsDivisible = function(dividend, divisor) {
+    if(dividend % divisor === 0)
+    {
+        return true;
+    }
+    return false;
+};
+
+var isLastPrimeFactor = function (dividend,divisor) {
+    if((dividend / divisor) === 1)
+    {
+        return true;
+    }
+    return false;
+};
+
+// Set initial prime factor
+var lastPrimeFactor = 2;
+
+var getNextPrimeFactor = function(number) {
+    var continueSearching = true;
+    
+    while(continueSearching)
+    {
+        if(numberIsDivisible(number, lastPrimeFactor))
+        {
+            continueSearching = false;
+        } else {
+            lastPrimeFactor ++;
+        }
+    }
+    
+    return lastPrimeFactor;
+};
+
+
+var primeFactors = [];
+
+var getLargestPrimeFactor = function() {
+    var continueFactoring = true;
+    var dividend = document.getElementById("problem3_input").value;
+    var divisor = 0;
+	
+	// Reset initial values for prime factors
+	primeFactors = [];
+	lastPrimeFactor = 2;
+	
+    while(continueFactoring) {
+        divisor = getNextPrimeFactor(dividend);
+        if(!isLastPrimeFactor(dividend, divisor))
+        {
+            dividend /= divisor;
+        } else {
+            continueFactoring = false;
+        }
+        primeFactors.push(divisor);
+    }
+	
+	// Update result in HTML
+	document.getElementById("problem3_answer").innerHTML = lastPrimeFactor;
+    
+    return lastPrimeFactor;
+};
+
+/*---------------------------------------------------------------
 						Event handlers
 -----------------------------------------------------------------*/
 
@@ -124,4 +193,6 @@ window.onload = function () {
 	problem1_answer.innerHTML = getSumFromMultiples();
 	var problem2_answer = document.getElementById("problem2_answer");
 	problem2_answer.innerHTML = getSumFromEvenFibonacciNumbers();
+	var problem3_answer = document.getElementById("problem3_answer");
+	problem3_answer.innerHTML = getLargestPrimeFactor();
 }
